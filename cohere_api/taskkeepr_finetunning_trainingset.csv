@@ -432,56 +432,55 @@ Ben: Ice cream sounds fantastic! I'll see you at 2:30 on Saturday.",Food
 Daniel: Saturday at 10:30 AM it is, Olivia. Looking forward to it!",Food
 "Grace: William, I'm craving pizza. Can we meet for dinner tomorrow at 6:45 PM at Tony's Pizzeria?
 William: Tomorrow at 6:45 PM for pizza? Count me in, Grace!",Food
-"Mia: Hey Alex, I wanted to catch up, but I have a dentist appointment at 3:30 PM. Can we meet up tomorrow instead?
+"Mia: Hey Alex, I wanted to catch up, but I am going away for a dentist appointment at 3:30 PM. Can we meet up tomorrow instead?
 Alex: No problem, Mia! Let's aim for 5:00 PM tomorrow then.",Away
-"Ethan: Olivia, I have a doctor's appointment at 1:45 PM. How about we meet for lunch at 3:30 PM?
-Olivia: Sounds good, Ethan. See you at 3:30 PM.",Away
-"Harper: Elijah, I have a hair appointment at 2:30 PM. How about we grab a late lunch at 4:00 PM?
-Elijah: Late lunch at 4:00 PM works for me, Harper.",Away
-"Lily: James, I'm volunteering at the shelter until 1:00 PM. Can we have coffee at 1:30 PM?
-James: That's perfect, Lily. See you at 1:30 PM.",Away
-"Mia: Jack, I have a haircut appointment at 11:00 AM. Can we meet for brunch at 12:30 PM?
-Jack: Brunch at 12:30 PM it is, Mia. Looking forward to it!",Away
-"Emma: Hey Alex, can we catch up for coffee tomorrow around 3:00 PM?
-Alex: I'd love to, Emma, but I have a dentist appointment at 3:30 PM. How about we meet at 2:00 PM instead?",Away
-"Mia: Liam, want to have lunch together on Friday at 1:00 PM?
-Liam: I wish I could, Mia, but I have a work presentation scheduled at 1:30 PM. Can we do it earlier, like 11:30 AM?",Away
-"Sophia: Ethan, can we discuss the project this afternoon around 4:30 PM?
-Ethan: I'm sorry, Sophia, but I have a doctor's appointment at 5:00 PM. How about we chat tomorrow morning at 9:30 AM?",Away
-"Ava: Noah, let's go for a walk this evening around 7:00 PM.
-Noah: I have a conference call at 7:30 PM, Ava. Can we make it 6:00 PM instead?
+"Ethan: Olivia, I have a doctor's appointment at 1:45 PM. 
+Olivia: Sounds good, Ethan.",Away
+"Harper: Elijah, I have a hair appointment at 2:30 PM.
+Elijah: Noted",Away
+"Lily: James, I'm volunteering at the shelter until 1:00 PM.
+James: Sounds good",Away
+"Mia: Jack, I have a haircut appointment at 11:00 AM.
+Jack Thanks for letting me know Mia.",Away
+"Emma: Hey Alex, I have a dentist appointment at 3:30 PM
+Alex: Ok no problem, let's meet after your appointment",Away
+"Mia: Liam, I have a personal errand at 1:30 PM. Don’t think I can do lunch today, sorry.
+Liam: No worries",Away
+"Sophia: I have a doctor's appointment at 5:00 PM. 
+Ethan: Sure, no worries, I will let you know what you missed at work today.",Away
+"Ava: Noah, I am going away for a conference today 
+Noah: No worries
 ",Away
 "Olivia: William, can you help me with some shopping on Saturday at 2:00 PM?
-William: I have a family gathering at 3:00 PM, Olivia. How about we meet at 1:00 PM?",Away
+William: Sorry I have a family gathering at 3:00 PM, Olivia.",Away
 "Chloe: Jacob, can we meet up for a quick chat tomorrow at 11:30 AM?
 Jacob: Sorry, Chloe, I have a job interview at noon. How about 10:00 AM?",Away
-"Grace: Daniel, let's catch a movie tonight around 8:00 PM.
-Daniel: I have a yoga class at 8:30 PM, Grace. Can we aim for the 6:30 PM show instead?",Away
-"Natalie: Kevin, want to join me for dinner on Sunday at 7:30 PM?
-Kevin: I have a flight to catch at 8:00 PM, Natalie. How about 5:30 PM for an early dinner?
+"Grace: Daniel, let's go to the workshop on LLM at noon
+Daniel: I have a yoga class at noon, Grace.",Away
+"Natalie: Kevin, I am going away for a conference in Los angeles
+Kevin: No problem, see you when you get back
 ",Away
 "Lily: Benjamin, can you come over to help me with my computer on Thursday at 4:00 PM?
-Benjamin: I have a meeting at work until 5:00 PM, Lily. How about I come by around 6:00 PM?
+Benjamin: I will be at the doctors until 5:00 PM, Lily
 ",Away
-"Ashley: Tyler, let's go for a hike this Saturday at 2:00 PM.
-Tyler: I have a dentist appointment at 2:30 PM, Ashley. Can we meet at 12:30 PM instead?",Away
+"Ashley: Tyler, do you have time for a meeting at 2:30 PM today?
+Tyler: Sorry I have a dentist appointment at 2:30 PM, Ashley.",Away
 "Sarah: Hey Alex, can we catch up for coffee tomorrow around 2:00 PM?
 Alex: I'd love to, Sarah, but I have a dentist appointment at 2:30 PM. How about later in the day?",Away
 "Michael: Jessica, can we talk about the project around 4:00 PM?
 Jessica: I'll be in a client meeting until 4:30 PM, Michael. Can we do it after that?",Away
 "Lisa: Brian, are you free for a quick chat at 5:15 PM today?
-Brian: Sorry, Lisa, I have a doctor's appointment at 5:30 PM. How about tomorrow morning?
-",Away
-"Olivia: Daniel, can we meet for a movie tonight around 7:00 PM?
-Daniel: I have a yoga class at 7:30 PM, Olivia. What about tomorrow for the movie?",Away
-"Samantha: Jacob, how about a bike ride tomorrow at 9:00 AM?
-Jacob: I'm booked for a charity event until 11:00 AM, Samantha. Can we ride in the afternoon?",Away
+Brian: Sorry, Lisa, I have a doctor's appointment at 5:30 PM",Away
+"Olivia: Daniel, can we meet to talk about the bug at 9AM?
+Daniel: I have a yoga class at 9AM, Olivia.",Away
+"Samantha: Jacob, can we have a performance review meeting?
+Jacob: I'm booked for a charity event until 11:00 AM, Samantha",Away
 "Emma: Hey, Chris, want to catch up for coffee tomorrow morning at 10:00 AM?
-Chris: I'd love to, but I have a dentist appointment at 10:30 AM. Can we meet after that?",Away
+Chris: I'd love to, but I have a dentist appointment at 10:30 AM.",Away
 "Sarah: David, can we discuss the project this afternoon around 3:00 PM?
-David: I wish I could, Sarah, but I have a doctor's appointment at 3:30 PM. Can we reschedule for tomorrow?",Away
+David: I wish I could, Sarah, but I have a doctor's appointment at 3:30 PM.",Away
 "Rachel: Alex, want to go for a walk this evening around 6:00 PM?
-Alex: I'd love to, Rachel, but I have a meeting with my client at 6:30 PM. How about tomorrow evening?
+Alex: I'd love to, Rachel, but I have a meeting with my client at 6:30 PM.
 ",Away
 "Olivia: Daniel, can we review the project timeline at 1:15 PM?
 Daniel: I'm afraid I have a lunch appointment at 1:15 PM, Olivia. How about 3:00 PM?",Away
@@ -494,20 +493,19 @@ Jacob: I'll be in a training session at 1:00 PM, Samantha. How about 3:30 PM?",A
 "Natalie: Kevin, we need to finalize the project proposal. Can we meet at 4:15 PM?
 Kevin: I have a doctor's appointment at 4:15 PM, Natalie. How about 5:00 PM?",Away
 "Ashley: Tyler, I'd like your input on the budget presentation at 2:00 PM.
-Tyler: I have a meeting with HR at 2:00 PM, Ashley. Can we reschedule for 3:30 PM?",Away
+Tyler: I have to run a Marathon at 2:00 PM, Ashley. Can we reschedule for 3:30 PM?",Away
 "Olivia: Daniel, I've got a training session at 10:30 AM, but I can meet at 10:00 AM to go over the project updates.
-
 Daniel: Sure, Olivia. Let's catch up at 10:00 AM then.",Away
-"Chloe: Ethan, I have a team meeting at 11:30 AM, but I'm free at 11:00 AM. Can we finalize the proposal by then?
+"Chloe: Ethan, I have Yoga at 11:30 AM, but I'm free at 11:00 AM. Can we finalize the proposal by then?
 
 Ethan: Sounds good, Chloe. Let's meet at 11:00 AM to wrap things up.",Away
-"Samantha: Jacob, I need to leave for a project review at 2:45 PM. Can we meet at 2:15 PM to go over the updates?
+"Samantha: Jacob, I need to leave to walk my dog at 2:45 PM. Can we meet at 2:15 PM to go over the updates?
 
 Jacob: Sure thing, Samantha. Let's meet at 2:15 PM.",Away
 "Natalie: Kevin, I'm stepping out for a team building exercise at 12:45 PM. Can we discuss the marketing plan at 12:15 PM?
 
 Kevin: Absolutely, Natalie. Let's meet at 12:15 PM to go through it.",Away
-"Ashley: Tyler, I have a training session at 9:30 AM, but I'm available at 9:00 AM. Can we finalize the timeline before that?
+"Ashley: Tyler, I have to run at 9:30 AM, but I'm available at 9:00 AM. Can we finalize the timeline before that?
 
 Tyler: No problem, Ashley. Let's meet at 9:00 AM to get it sorted.",Away
 "Sarah: Alex, I need your input on the presentation, but I have a dentist appointment at 2:30 PM.
@@ -519,18 +517,18 @@ Jessica: Sure, Michael. Let's meet at 2:00 PM to go through it.",Away
 "Lisa: Brian, I'll be out of the office for a meeting with a vendor from 1:30 PM to 3:00 PM. Can we touch base later?
 Brian: Absolutely, Lisa. Let's sync up at 3:30 PM.
 ",Away
-"Olivia: Daniel, I've got a conference call at 10:45 AM. Can we discuss the marketing strategy right after?
+"Olivia: Daniel, I've got meeting with some clients outside of the office at 10:45 AM. Can we discuss the marketing strategy right after?
 Daniel: No problem, Olivia. We can talk at 11:30 AM.",Away
-"Grace: William, I'm swamped with a project until 4:00 PM today. Can we schedule our team meeting for tomorrow instead?
+"Grace: William, I'm outside until 4:00 PM today. Can we schedule our team meeting for tomorrow instead?
 William: Sure, Grace. Tomorrow at 10:00 AM works for me.",Away
-"Samantha: Jacob, I have an HR training session from 2:00 PM to 4:00 PM. Can we go over the project specs in the morning?
+"Samantha: Jacob, I am away from 2:00 PM to 4:00 PM. Can we go over the project specs in the morning?
 Jacob: No problem, Samantha. Let's meet at 10:30 AM.
 ",Away
 "Natalie: Kevin, I have a mandatory departmental meeting at 1:00 PM. Can we chat about the budget revisions later?
 Kevin: Sure, Natalie. Let's catch up around 2:30 PM.",Away
-"Ashley: Tyler, I'm scheduled for a client presentation at 3:45 PM. Can we reschedule our brainstorming session for tomorrow?
+"Ashley: Tyler, I'm scheduled for a client meeting outside at 3:45 PM. Can we reschedule our brainstorming session for tomorrow?
 Tyler: Absolutely, Ashley. Tomorrow at 9:30 AM should work.",Away
-"Jessica: I wish I could, but I have a client meeting scheduled at that time. Can we do it right after lunch?",Away
+"Jessica: I wish I could, but I have a client meeting away from office scheduled at that time. Can we do it right after lunch?",Away
 "David: Emily, could you help me with the presentation at 2:00 PM today?
 Emily: Sorry, David, I have a doctor's appointment at that time. Can we reschedule for later in the afternoon?",Away
 "Sarah: Alex, can we go over the project details at 10:30 AM?
@@ -755,13 +753,12 @@ David: Sounds good, Sarah. Friday at 10:30 AM it is.",Meeting
 "Sarah: Hi John, just wanted to let you know that I'll be away from the office from 2:00 PM to 4:00 PM for a doctor's appointment today.
 
 John: Thanks for letting me know, Sarah. I'll make sure not to schedule any meetings during that time.",Away
-"Alex: Emily, I won't be available tomorrow morning from 9:30 AM to 11:00 AM for a training session.
-
+"Alex: Emily, I won't be available tomorrow morning from 9:30 AM to 11:00 AM for a training session outside of office
 Emily: No problem, Alex. I'll make sure to handle any urgent matters during that time.",Away
 "Michael: Hey, Lisa, I'll be out of the office on Friday from 1:00 PM to 3:30 PM for a personal errand.
 
 Lisa: Got it, Michael. I'll make a note of it and handle any incoming requests during that time.",Away
-"Daniel: Maria, just a heads up, I'll be in a client meeting all morning on Wednesday, from 10:00 AM to 12:00 PM.
+"Daniel: Maria, just a heads up, I'll be in a client meeting out of office all morning on Wednesday, from 10:00 AM to 12:00 PM.
 
 Maria: Thanks for informing me, Daniel. I'll ensure we have coverage during your absence.",Away
 "Jason: Olivia, I'll be on vacation next week from Monday to Friday, so I won't be available during that time.

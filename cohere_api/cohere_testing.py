@@ -1,8 +1,8 @@
 import cohere
+
 # import nltk
 # import asyncio
-
-def get_response(chat):
+def get_summary(chat):
 	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
 	response =  co.generate(
 		model= 'command-nightly',
@@ -15,15 +15,16 @@ def get_response(chat):
 	)
 	# print(response)
 	print(response[0])
-	# response =  co.generate(
-	# 	model= 'command-nightly',
-	# 	stream= True,
-	# 	prompt = '\n'.join(chat) + '\nFor context: \'I am Leo\', give me',
-	# 	max_tokens = 8,
-	# 	temperature= 0.0
-	# )
-	# print(response)
-	# print(response[0])
+
+def get_class(chat):
+
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No') # This is your trial API key
+	response = co.classify(
+	model='876ce67e-3da6-47f5-9f82-e523f0c022ba-ft',
+	inputs=['\n'.join(chat)])
+
+	print('The confidence levels of the labels are: {}'.format(response.classifications))
+
 
 def main():
 	chat1 = [
@@ -57,10 +58,12 @@ def main():
 	]
 	chat3 = [
 		'Leo: I am going to be away from 12-2 pm today for a doctor\'s appointment.',
-		''
+		'Carlos: No problem. I will let you know what you missed.',
 	]
 
-	get_response(chat1)
+	get_summary(chat1)
+	get_class(chat3)
+
 
 if __name__ == '__main__':
 	main()	
