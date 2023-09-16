@@ -1,0 +1,54 @@
+﻿Prompt,Classification
+"Person A (Sarah): Hi John, just wanted to let you know that I'll be away from the office from 3:00 PM to 5:00 PM for a doctor's appointment.
+
+Person B (John): Thanks for letting me know, Sarah. I'll make sure not to schedule any meetings during that time.
+",Away
+"Person A (David): Hey Lisa, I won't be available in the office tomorrow. I have a conference from 9:00 AM to 4:00 PM.
+
+Person B (Lisa): Noted, David. I'll handle any urgent matters in your absence.",Away
+"Emily: Hi Mark, I'll be out of the office on Friday morning, from 10:30 AM to 12:30 PM for a family event.
+
+Mark: Got it, Emily. I'll cover for you during that time.
+",Away
+"Person A (Olivia): Hey Ethan, I won't be available this Thursday from 1:00 PM to 3:30 PM. I have a dentist appointment.
+
+Person B (Ethan): No problem, Olivia. I'll make sure to handle any urgent matters during that time.",Away
+"Alex: Good morning, Sarah. Can we schedule a meeting for next Tuesday from 2:00 PM to 3:00 PM?
+Sarah: Sure, that works for me. I'll mark it in the calendar.",Meeting
+"Emily: Hi, John. Can we meet on Thursday from 10:30 AM to 11:30 AM to discuss the project?
+John: Sounds good, Emily. I'll see you then.",Meeting
+"David: Hey, Lisa. Let's schedule a quick catch-up tomorrow at 4:15 PM.
+Lisa: Tomorrow at 4:15 PM works for me. I'll set a reminder.",Meeting
+"Maria: Hi, Michael. Can we have a team meeting next Friday, starting at 9:30 AM and ending at 10:30 AM?
+Michael: That works for me, Maria. Let's do it.",Meeting
+"Emma: Hi, Daniel. Let's schedule a brainstorming session for Wednesday, starting at 11:00 AM and ending at 12:30 PM.
+Daniel: Perfect, Emma. I'll block off that time.",Meeting
+"Person 1 (Sarah): Hey, Alex, want to grab lunch tomorrow at 12:30 PM at the new Mexican place downtown?
+
+Person 2 (Alex): Sure, Sarah! 12:30 PM works for me. See you there!
+",Food
+"Sarah: Hey, Alex! How about we grab lunch together tomorrow? 12:30 PM at that new cafe?
+Alex: Sounds good, Sarah! I'm in. See you at 12:30 PM.",Food
+"David: Hi Emily, want to have dinner this Friday? 7:00 PM at Luigi's Italian Restaurant?
+Emily: Sure thing, David! 7:00 PM at Luigi's it is.",Food
+"Person 1 (Aiden): Hi Mia, want to grab a quick bite? Tomorrow at 1:00 PM at the sandwich shop?
+
+Person 2 (Mia): Sure, Aiden! 1:00 PM at the sandwich shop.
+",Food
+"Person 1 (Sophie): Hi Max, let's have an early dinner this Wednesday. 5:45 PM at The Grill House?
+
+Person 2 (Max): Sure, Sophie! 5:45 PM at The Grill House sounds great.
+",Food
+"Emma: Hey, Chris, want to catch up for coffee tomorrow morning at 10:00 AM?
+Chris: I'd love to, but I have a dentist appointment at 10:30 AM. Can we meet after that?",Away
+"Samantha: Good morning, John. What are you working on today?
+
+John: Morning, Samantha. I'm focusing on finalizing the budget proposal for the Q4 project.
+",Task
+"Alex: Hey, Lisa. What's on your plate for today?
+
+Lisa: Hi, Alex. I'm working on analyzing customer feedback from the recent survey.",Task
+"Sarah: Good morning, Michael! What are you working on today?
+
+Michael: Hi, Sarah! I'm diving into the market research for our new product launch.",Task
+"Grace: William, I'll be conducting employee interviews from 11:00 AM to 1:00 PM. Can you handle any urgent emails during that period?",Task
