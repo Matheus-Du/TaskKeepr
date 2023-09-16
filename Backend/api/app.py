@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import datetime
 
 app = Flask(__name__)
 
@@ -8,8 +7,8 @@ def create_message():
     try:
         # Get the JSON data from the request
         body = request.get_json()['data']
-        message = body['message']
-        print(message, datetime.datetime.now().isoformat())
+        message = body['messages']
+        print(body)
 
         # FIXME @LEO: chain route with Cohere API, using the `text`
 
