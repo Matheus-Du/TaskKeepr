@@ -1,0 +1,20 @@
+﻿Prompt,Classification
+"Co-worker 1 (Emily): Hi there, Mark! Can we schedule a meeting for tomorrow at 2:00 PM? Co-worker 2 (Mark): Hi, Emily! Sure, 2:00 PM tomorrow works for me. Where should we have the meeting?",Meeting
+"Co-worker 1 (Sarah): Hey, Tom, can we schedule a meeting for next Tuesday at 2:00 PM? Co-worker 2 (Tom): Tuesday at 2:00 PM works for me. What's the agenda?",Meeting
+"Co-worker 1 (Emma): Hi James, I think we should schedule a meeting to discuss the budget report. How about Wednesday at 3:00 PM? Co-worker 2 (James): Wednesday at 3:00 PM works for me. Let's go ahead and book it.",Meeting
+"Co-worker 1 (Lisa): Hey Mike, can we set up a meeting to go over the project timeline? How about next Tuesday at 2:30 PM? Co-worker 2 (Mike): Next Tuesday at 2:30 PM sounds good. I'll mark it in my calendar.",Meeting
+"Co-worker 1 (Alex): Sarah, we need to review the marketing campaign's results. How about Thursday at 11:00 AM? Co-worker 2 (Sarah): Thursday at 11:00 AM is perfect. I'll block that time off for our meeting.",Meeting
+"Co-worker 1 (Tom): Emily, let's schedule a meeting to discuss the client presentation. How about Friday at 4:15 PM? Co-worker 2 (Emily): Friday at 4:15 PM works for me. I'll send out the invites.",Meeting
+"Person A (Sarah): Hi James! Would you be available for dinner on Saturday at 7:30 PM? Person B (James): Hi Sarah! Saturday at 7:30 PM sounds perfect. I'll see you then!",Food
+"Person A (Liam): Hey Mia! How about we meet for coffee tomorrow at 10:30 AM? Person B (Mia): Hi Liam! Tomorrow at 10:30 AM works great. Looking forward to it!",Food
+"Person A (Olivia): Hi Daniel! Can we do brunch on Sunday at 11:00 AM? Person B (Daniel): Hi Olivia! Sunday at 11:00 AM works perfectly for me. See you then!",Food
+"Person A (Sophia): Hi Ethan! How about a quick lunch on Thursday at 12:30 PM? Person B (Ethan): Hi Sophia! Thursday at 12:30 PM sounds good. I'll see you then!",Food
+"Person A (Noah): Hi Ava! Let's grab a snack after work this Monday at 5:45 PM. Is that good for you? Person B (Ava): Hi Noah! Monday at 5:45 PM works great. I'm in!",Food
+"Lisa: Brian, are you free for a quick chat at 5:15 PM today? Brian: Sorry, Lisa, I have a doctor's appointment at 5:30 PM. How about tomorrow morning?",Away
+"Olivia: Daniel, can we meet for a movie tonight around 7:00 PM? Daniel: I have a yoga class at 7:30 PM, Olivia. What about tomorrow for the movie?",Away
+"Samantha: Jacob, how about a bike ride tomorrow at 9:00 AM? Jacob: I'm booked for a charity event until 11:00 AM, Samantha. Can we ride in the afternoon?",Away
+"Emma: Hey, Chris, want to catch up for coffee tomorrow morning at 10:00 AM? Chris: I'd love to, but I have a dentist appointment at 10:30 AM. Can we meet after that?",Away
+"Michael: Jessica, I'll be working on the presentation for the client meeting from 2:30 PM to 4:00 PM. Jessica: No problem, Michael. Let's touch base afterward.",Task
+"Grace: William, I have a training session to facilitate from 10:00 AM to 12:00 PM. William: Understood, Grace. We can talk afterward about the marketing campaign. ",Task
+"Ashley: Tyler, I'll be drafting the quarterly report until 5:30 PM. Tyler: Thanks for the heads up, Ashley. We can finalize it together this evening.",Task
+"Grace: William, I'll be conducting employee interviews from 11:00 AM to 1:00 PM. Can you handle any urgent emails during that period?",Task
