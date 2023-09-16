@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import UAlberta from './shared/icon-ualberta.svg'
 
 export const Profile = () => {
-    let fillCells = 0;
-
+    let fillCells= 3;
     const cellsToFill = fillCells > 0 ? Math.min(fillCells, 7) : 0;
     console.log(cellsToFill)
     return (
