@@ -4,7 +4,7 @@ import cohere
 # import asyncio
 def get_summary(chat):
 	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
-	response =  co.generate(
+	return co.generate(
 		model= 'command-nightly',
 		# stream= True,
 		prompt = '\n'.join(chat) + '\nFor context: \'I am Leo\'. '+ 
@@ -12,9 +12,7 @@ def get_summary(chat):
 		'what am I doing today in bullet point?',
 		max_tokens = 100,
 		temperature= 0.1
-	)
-	# print(response)
-	print(response[0])
+	)[0]
 
 def get_class(chat):
 
@@ -66,7 +64,7 @@ def main():
 		'Owen: Sounds good.',
 	]
 
-	get_summary(chat1)
+	print(get_summary(chat1))
 	get_class(chat4)
 
 if __name__ == '__main__':
