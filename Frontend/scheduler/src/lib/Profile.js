@@ -33,6 +33,15 @@ export const Profile = ({
 }) => {
   const fillArray = getFillArray(startDate, endDate);
   return (
+    <>
+    <div className="relative">
+    <div className='absolute flex flex-row'>
+                <div className='py-6 px-6 relative overflow-visible'>
+                    <div className='relative right-28 top-10 px-5 py-4 circle1 rounded-full border-2 h-20 w-20'>
+                        <img src={UAlberta} alt='UAlberta Logo'></img>
+                    </div>
+                </div> 
+            </div>
     <div className="flex grow">
       <div className="w-1/8 flex items-center">
         <p className="text-gray-100 px-6 py-12 ">{name}</p>
@@ -173,5 +182,7 @@ export const Profile = ({
         )}
       </div>
     </div>
+    </div>
+    </>
   );
 };
