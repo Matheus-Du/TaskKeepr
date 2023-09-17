@@ -26,6 +26,23 @@ def get_to_do_today(chat, name):
 		temperature= 0.1
 	)[0]
 
+def get_summary_events(chat):
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
+	return co.generate(
+		model= 'command-nightly',
+		# stream= True,
+		prompt = '\n'.join(chat) + '\nFor context: \'This is a group conversation\'. '+ 
+		'In the format of this example event: \'Title: Meeting between Leo and Steve,' +
+											'\nStart Time: Thurs, 15 Sep 2023 12:00:00 GMT' +
+											'\nEnd Time: Thurs, 15 Sep 2023 13:00:00 GMT' + 
+											'\nDescription: Discussing the new feature of the website' +
+											' \'' + 
+		'Give me a list of events in this chat in the above format.' + 
+		'If the day is not specified, try to extrapolate from today (Sunday, September 17, 2023), if extrapolation is not possible, make it the current date 2023-09-17 00:00:00 to 23:59:59.',
+		max_tokens = 2000,
+		temperature= 0.1
+	)[0]
+
 def get_class(chat):
 
 	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No') # This is your trial API key
@@ -33,7 +50,8 @@ def get_class(chat):
 	model='21f46f0b-5c69-4c06-b337-0540375b4945-ft',
 	inputs=['\n'.join(chat)])
 
-	print('The confidence levels of the labels are: {}'.format(type(response.classifications[0])))
+	return 'Type: {}'.format(response.classifications[0].prediction)
+	# print('The confidence levels of the labels are: {}'.format(response.classifications[0].prediction))
 
 def main():
 	chat1 = [
@@ -51,13 +69,13 @@ def main():
 		'Leo: Do you have time for a meeting later today at 4pm to discuss the new feature?',
 		'Tom: Yes, I do. I will send you a calendar invite.'
 		'Leo: Sounds good.'
-		'Tom: Thanks.'
-		'Matt: Hi Leo, how\'s it going with the bug?',
-		'Leo: I am still working on it. I will let you know when I am done.',
-		'Matt: Sounds good. Do you have time for a meeting today at 3pm to discuss your progress?',
-		'Leo: Actually I have a doctor\'s appointment at 3pm. Can we do it at 4:30pm?',
-		'Matt: Sure, that works for me. I will send you a calendar invite.',
-		'Leo: Thanks.',
+		'Tom: Thanks.',
+		# 'Matt: Hi Leo, how\'s it going with the bug?',
+		# 'Leo: I am still working on it. I will let you know when I am done.',
+		# 'Matt: Sounds good. Do you have time for a meeting today at 3pm to discuss your progress?',
+		# 'Leo: Actually I have a doctor\'s appointment at 3pm. Can we do it at 4:30pm?',
+		# 'Matt: Sure, that works for me. I will send you a calendar invite.',
+		# 'Leo: Thanks.',
 		]
 	chat2 = [
 		'Leo: I am working on the Cohere API today.',
@@ -77,8 +95,9 @@ def main():
 	]
 
 	# print(get_summary(chat1))
-	# print(get_class(chat1))
-	print(get_to_do_today(chat1, 'Leo'))
+	# print(get_to_do_today(chat1, 'Leo'))
+	print(get_summary_events(chat1))
+	print(get_class(chat1))
 
 if __name__ == '__main__':
 	main()	
