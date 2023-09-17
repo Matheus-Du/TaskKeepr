@@ -26,6 +26,11 @@ def create_message():
         # FIXME @LEO: chain route with Cohere API, using the `text`
         summary = get_summary(messages)
         print("Summary: \n", summary)
+        
+        event_info = get_summary_events(messages)
+        event_type = get_class(messages)
+        print("Event Info: \n", event_info)
+        print("\n " + event_type)
 
         # FIXME @MATHEUS: insert result from Cohere into DB
         # check if team or user already exists in DB, if not, add them
@@ -299,6 +304,32 @@ def get_to_do_today(chat, name):
 		max_tokens = 100,
 		temperature= 0.1
 	)[0]
+
+def get_summary_events(chat):
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
+	return co.generate(
+		model= 'command-nightly',
+		# stream= True,
+		prompt = '\n'.join(chat) + '\nFor context: \'This is a group conversation\'. '+ 
+		'In the format of this example event: \'Title: Meeting between Leo and Steve,' +
+											'\nStart Time: Thurs, 15 Sep 2023 12:00:00 GMT' +
+											'\nEnd Time: Thurs, 15 Sep 2023 13:00:00 GMT' + 
+											'\nDescription: Discussing the new feature of the website' +
+											' \'' + 
+		'Give me a list of events in this chat in the above format.' + 
+		'If the day is not specified, try to extrapolate from today (Sunday, September 17, 2023), if extrapolation is not possible, make it the current date 2023-09-17 00:00:00 to 23:59:59.',
+		max_tokens = 2000,
+		temperature= 0.1
+	)[0]
+
+def get_class(chat):
+
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No') # This is your trial API key
+	response = co.classify(
+	model='21f46f0b-5c69-4c06-b337-0540375b4945-ft',
+	inputs=['\n'.join(chat)])
+
+	return 'Type: {}'.format(response.classifications[0].prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)
