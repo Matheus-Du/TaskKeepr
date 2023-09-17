@@ -1,33 +1,13 @@
-import { CalendarBelow, EmployeeList } from "./components/EmployeeList"
-import { CalendarTop } from "./components/CalendarTop"
-import { Header } from "./components/Header"
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import {Routes, Route} from 'react-router-dom';
+import { Home } from './Home';
+import Dashboard from './Dashboard';
 
-export default function App() {
-  
-  const [data, setData] = useState([{}]);
-
-  useEffect( ()=> {
-    fetch("/teams").then(
-      res => res.json()
-    ).then(
-      data => {
-        setData(data);
-        console.log(data);
-      }
+export const App = () => {
+    return (
+    <Routes>
+      <Route path="/teams" element={<Home/>} />
+      <Route path="/events" element={<Dashboard/>} />
+    </Routes>
     )
-  }, [])
-
-  return (
-    <main className="flex w-full bg-backgroundWork"> 
-        <div className="flex flex-col gap-y-6">
-
-          <Header/>
-          <div className="flex flex-col gap-y-4 mx-32 my-1">
-              <CalendarTop/>
-              <EmployeeList/>
-        </div>
-        </div>
-    </main>
-  )
 }
