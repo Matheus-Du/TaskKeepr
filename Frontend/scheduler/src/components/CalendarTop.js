@@ -9,6 +9,9 @@ export const CalendarTop = () => {
       </div>
       <div className="w-7/8 flex">
         <div className="flex-1/7 grow flex items-center justify-center">
+          <p className="text-gray-100">Sunday</p>
+        </div>
+        <div className="flex-1/7 grow flex items-center justify-center">
           <p className="text-gray-100">Monday</p>
         </div>
         <div className="flex-1/7 grow flex items-center justify-center">
@@ -25,9 +28,6 @@ export const CalendarTop = () => {
         </div>
         <div className="flex-1/7 grow flex items-center justify-center">
           <p className="text-gray-100">Saturday</p>
-        </div>
-        <div className="flex-1/7 grow flex items-center justify-center">
-          <p className="text-gray-100">Sunday</p>
         </div>
       </div>
     </div>
