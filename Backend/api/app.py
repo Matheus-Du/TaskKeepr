@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import psycopg
 import os
 from dotenv import load_dotenv
@@ -10,6 +11,7 @@ import pytz
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/messages', methods=['POST'])
 def create_message():
