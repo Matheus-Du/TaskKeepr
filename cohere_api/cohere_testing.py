@@ -20,11 +20,10 @@ def get_class(chat):
 
 	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No') # This is your trial API key
 	response = co.classify(
-	model='876ce67e-3da6-47f5-9f82-e523f0c022ba-ft',
+	model='21f46f0b-5c69-4c06-b337-0540375b4945-ft',
 	inputs=['\n'.join(chat)])
 
-	print('The confidence levels of the labels are: {}'.format(response.classifications))
-
+	print('The confidence levels of the labels are: {}'.format(type(response.classifications[0])))
 
 def main():
 	chat1 = [
@@ -61,9 +60,14 @@ def main():
 		'Carlos: No problem. I will let you know what you missed.',
 	]
 
-	get_summary(chat1)
-	get_class(chat3)
+	chat4 = [
+		'Owen: Want to get some tacos at 1pm?',
+		'Leo: Sure, let\'s go to the dining hall.',
+		'Owen: Sounds good.',
+	]
 
+	get_summary(chat1)
+	get_class(chat4)
 
 if __name__ == '__main__':
 	main()	
