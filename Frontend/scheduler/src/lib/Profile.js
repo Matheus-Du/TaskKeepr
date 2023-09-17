@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import UAlberta from "./shared/icon-ualberta.svg";
 import { ProgressBar } from "../components/ProgressBar";
-import { TasksList } from "../components/TasksList";
 import moment from "moment";
 
 const getFillArray = (startDate, endDate) => {
@@ -41,15 +40,11 @@ export const Profile = ({
         <div className="py-6 px-6 relative overflow-visible">
           <div className="relative right-32 px-5 py-4 circle1 rounded-full border-2 h-20 w-20">
             <img src={UAlberta} alt="UAlberta Logo"></img>
-            <p className="text-gray-100 mt-4">{name}</p>
           </div>
         </div>
       </div>
-      <ProgressBar fillArray={fillArray} />
+      <ProgressBar fillArray={fillArray} title={type} description={description} />
     </div>
   );
 };
 
-// <div className='absolute circle1 rounded-full border-2 border-black h-24 w-24'>
-//<img className='relative top-3 left-5' src={UAlberta} alt='UAlberta Logo'></img>
-//</div>
