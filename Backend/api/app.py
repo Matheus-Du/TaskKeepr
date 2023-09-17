@@ -85,14 +85,14 @@ def teamUsers(id):
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
             if request.method == 'GET':
-                cur.execute("SELECT users.username FROM userTeam \
+                cur.execute("SELECT users.id, users.username FROM userTeam \
                             INNER JOIN users ON userTeam.teamMember = users.id \
                             WHERE userTeam.team = '{}'".format(id))
                 data = cur.fetchall()
                 # convert each row to a JSON object and return as a list of JSON objects
                 json = []
                 for row in data:
-                    json.append({'username': row[0]})
+                    json.append({'userID': row[0], 'teamMember': row[1]})
                 return json
             elif request.method == 'POST':
                 # add user to team
@@ -111,14 +111,16 @@ def userEvents(id):
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
             if request.method == 'GET':
-                cur.execute("SELECT * FROM events \
+                cur.execute("SELECT events.id, events.name, events.description, events.type, \
+                            events.dateCreated, events.startDate, events.endDate FROM events \
                             INNER JOIN userEvent ON events.id = userEvent.event \
                             WHERE userEvent.teamMember = '{}'".format(id))
                 data = cur.fetchall()
                 # convert each row to a JSON object and return as a list of JSON objects
                 json = []
                 for row in data:
-                    json.append({'event': row[0]})
+                    json.append({'eventID': row[0], 'name': row[1], 'description': row[2], 'type': row[3], 
+                                 'dateCreated': row[4], 'startDate': row[5], 'endDate': row[6]})
                 return json
             elif request.method == 'POST':
                 # assign event to user
@@ -137,14 +139,16 @@ def teamEvents(id):
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
             if request.method == 'GET':
-                cur.execute("SELECT events.name FROM teamEvent \
+                cur.execute("SELECT events.id, events.name, events.description, events.type, \
+                            events.dateCreated, events.startDate, events.endDate FROM teamEvent \
                             INNER JOIN events ON teamEvent.event = events.id \
                             WHERE teamEvent.team = '{}'".format(id))
                 data = cur.fetchall()
                 # convert each row to a JSON object and return as a list of JSON objects
                 json = []
                 for row in data:
-                    json.append({'event': row[0]})
+                    json.append({'eventID': row[0], 'name': row[1], 'description': row[2], 'type': row[3], 
+                                 'dateCreated': row[4], 'startDate': row[5], 'endDate': row[6]})
                 return json
             elif request.method == 'POST':
                 # assign event to team
