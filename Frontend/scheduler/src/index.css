@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* src/App.css */
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    margin: 0;
+  }
+  
+  nav li {
+    margin: 10px;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+  }
+  
+  nav a.active {
+    background-color: #555;
+  }
+  
+  .element {
+    padding: 100px;
+    text-align: center;
+  }
+  
+  .element:nth-child(odd) {
+    background-color: #f0f0f0;
+  }
+  
+  .element:nth-child(even) {
+    background-color: #e0e0e0;
+  }
+  

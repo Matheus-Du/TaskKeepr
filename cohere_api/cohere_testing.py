@@ -14,6 +14,18 @@ def get_summary(chat):
 		temperature= 0.1
 	)[0]
 
+def get_to_do_today(chat, name):
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
+	return co.generate(
+		model= 'command-nightly',
+		# stream= True,
+		prompt = '\n'.join(chat) + '\nFor context: \'I am ' + name + '\'. '+ 
+		'In the format of this example: \'- Fixing a login bug from 2 pm to 4 pm\'?' + 
+		'what am I doing today in bullet point?',
+		max_tokens = 100,
+		temperature= 0.1
+	)[0]
+
 def get_class(chat):
 
 	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No') # This is your trial API key
@@ -64,8 +76,9 @@ def main():
 		'Owen: Sounds good.',
 	]
 
-	print(get_summary(chat1))
-	get_class(chat4)
+	# print(get_summary(chat1))
+	# print(get_class(chat1))
+	print(get_to_do_today(chat1, 'Leo'))
 
 if __name__ == '__main__':
 	main()	
