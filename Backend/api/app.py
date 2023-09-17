@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import psycopg
 import os
 from dotenv import load_dotenv
@@ -6,28 +7,62 @@ import cohere
 import json
 from datetime import datetime
 import pytz
+import uuid
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/messages', methods=['POST'])
 def create_message():
     try:
         # Get the JSON data from the request
+        print("Request: \n", request.get_json())
         body = request.get_json()['data']
-        message = body['messages']
+        messages = body['messages']
         print(body)
 
         # FIXME @LEO: chain route with Cohere API, using the `text`
-        res = get_summary(message)
+        summary = get_summary(messages)
+        print("Summary: \n", summary)
 
         # FIXME @MATHEUS: insert result from Cohere into DB
+        # check if team or user already exists in DB, if not, add them
+        with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
+            with conn.cursor() as cur:
+
+                cur.execute("SELECT * FROM teams WHERE id = '{}'".format(body['teamId']))
+                if cur.fetchone() is None:
+                    cur.execute("INSERT INTO teams (id, name) VALUES ('{}', '{}')".format(body['teamId'], body['teamName']))
+                    conn.commit()
+
+                cur.execute("SELECT * FROM users WHERE id = '{}'".format(body['userId']))
+                if cur.fetchone() is None:
+                    cur.execute("INSERT INTO users (id, username) VALUES ('{}', '{}')".format(body['userId'], body['userName']))
+                    cur.execute("INSERT INTO userTeam (team, teamMember) VALUES ('{}', '{}')".format(body['teamId'], body['userId']))
+                    conn.commit()                
+
+                # add event to DB
+                eventID = uuid.uuid4()
+                cur.execute("INSERT INTO events (id, name, description, type, startDate, endDate, dateCreated) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{4}', '{4}')".format(eventID, "PlaceholderTitle", summary, "PlaceholderType", datetime.now(pytz.timezone('US/Eastern'))))
+                conn.commit()
+                # associate event with user and team using the userId and teamId to call the endpoints
+                cur.execute("INSERT INTO userEvent (event, teamMember) VALUES ('{}', '{}')".format(eventID, body['userId']))
+                cur.execute("INSERT INTO teamEvent (event, team) VALUES ('{}', '{}')".format(eventID, body['teamId']))
+                conn.commit()
 
         return jsonify({'message': 'Message summarized successfully'}), 201
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# SQL call to create a new user-event relationship
+def createUserEvent(id, cursor):
+    cursor.execute("SELECT users.id, users.username FROM userTeam \
+                    INNER JOIN users ON userTeam.teamMember = users.id \
+                    WHERE userTeam.team = '{}'".format(id))
+    data = cursor.fetchall()
 
 # Add a new user to the database or return all users
 @app.route("/users", methods=['GET', 'POST', 'DELETE'])
@@ -106,6 +141,7 @@ def addEvent():
                 except Exception:
                     return "Error: Event with that ID already exists", 500
                 else:
+                    cur.execute("SELECT * FROM events WHERE name = '{}'".format(data['name']))
                     return "Success"
             elif request.method == 'GET':
                 cur.execute("SELECT * FROM events")
@@ -207,6 +243,38 @@ def teamEvents(id):
                 else:
                     return "Success"
 
+@app.route("/daily/<id>")
+def daily():
+    with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
+        with conn.cursor() as cur:
+            # Get today's date
+            today = datetime.date.today()
+
+            # SQL query with additional conditions
+            query = """
+            SELECT events.description, events.name
+            FROM events
+            INNER JOIN userEvent ON events.id = userEvent.event
+            WHERE userEvent.teamMember = '{}'
+            AND (
+                DATE(events.dateCreated) = '{}'
+                OR (
+                    '{}' BETWEEN DATE(events.startDate) AND DATE(events.endDate)
+                    AND DATE(events.startDate) <= '{}'
+                )
+            )
+            """.format(id, today, today, today)
+
+            # Execute the modified query
+            cur.execute(query)
+            data = cur.fetchall()
+
+            # FIXME: @LEO summarize today using the list of `data`
+            print(get_to_do_today(data[0], data[1]))
+
+            return 'test'
+        
+
 @app.route("/")
 def hello_world():
     return "Hello World"
@@ -218,6 +286,18 @@ def get_summary(chat):
 		# stream= True,
 		prompt = '\n'.join(chat) + '\nFor context: \'\'. '+ 
 		'In the format of this example: \'-Leo is fixing the login bug on signin page from 2 pm to 4 pm\'?' + 
+		'Give me the summary of this conversation?',
+		max_tokens = 100,
+		temperature= 0.1
+	)[0]
+
+def get_to_do_today(chat, name):
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
+	return co.generate(
+		model= 'command-nightly',
+		# stream= True,
+		prompt = '\n'.join(chat) + '\nFor context: \'I am ' + name + '\'. '+ 
+		'In the format of this example: \'- Fixing a login bug from 2 pm to 4 pm\'?' + 
 		'what am I doing today in bullet point?',
 		max_tokens = 100,
 		temperature= 0.1

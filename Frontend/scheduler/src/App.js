@@ -17,14 +17,16 @@ export default function App() {
       }
     )
   }, [])
+
   return (
     <main className="flex w-full bg-backgroundWork"> 
         <div className="flex flex-col gap-y-6">
+
           <Header/>
           <div className="flex flex-col gap-y-4 mx-32 my-1">
               <CalendarTop/>
               <EmployeeList/>
-          </div>
+        </div>
         </div>
     </main>
   )

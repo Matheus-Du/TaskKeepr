@@ -3,11 +3,12 @@ const {
   CardFactory,
   TurnContext,
 } = require("botbuilder");
-const rawWelcomeCard = require("./adaptiveCards/welcome.json");
-const rawLearnCard = require("./adaptiveCards/learn.json");
+const rawSuccessCard = require("./adaptiveCards/success.json");
 const cardTools = require("@microsoft/adaptivecards-tools");
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
+
+const teamId = "0e90fc8a-94b3-4245-84f1-854c2046ae8c";
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
@@ -27,54 +28,17 @@ class TeamsBot extends TeamsActivityHandler {
         txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
       }
 
-      // https://developer.microsoft.com/en-us/graph/graph-explorer Teams Beta: GET replies to message in a channel
-      const teamId = "0e90fc8a-94b3-4245-84f1-854c2046ae8c";
-      const channelId = context.activity.channelData.channel.id;
-      const messageId = await this.getMessageId(context);
-
-      try {
-        const authToken = process.env.GRAPH_ACCESS_TOKEN;
-        const headers = {
-          authorization: `Bearer ${authToken}`,
-        };
-        // GET main initial message
-        // https://graph.microsoft.com/beta/teams/{group-id-for-teams}/channels/{channel-id}/messages/{message-id}
-        let response = await axios.get(
-          `https://graph.microsoft.com/beta/teams/${teamId}/channels/${channelId}/messages/${messageId}`,
-          {
-            headers,
-          }
-        );
-        const firstMessage = response.data.body;
-
-        // GET all subsequent messsages in thread
-        response = await axios.get(
-          `https://graph.microsoft.com/v1.0/teams/${teamId}/channels/${channelId}/messages/${messageId}/replies`,
-          // `https://graph.microsoft.com/beta/teams/0e90fc8a-94b3-4245-84f1-854c2046ae8c/channels/19:783ae848203546e3acc0d2c7998a942b@thread.tacv2/messages/1694878371226/replies`,
-          {
-            headers,
-          }
-        );
-
-        // Re-order and format messages from html -> text
-        let htmlMessages = response.data.value.map((r) => r.body);
-        htmlMessages.push(firstMessage);
-        htmlMessages = htmlMessages.reverse();
-        htmlMessages.push(txt);
-
-        let plainTextMessages = htmlMessages.map((msg) => {
-          try {
-            // Parse the HTML string into a DOM element and extract its plain text
-            const dom = new JSDOM(msg.content);
-            let text = dom.window.document.firstChild.textContent;
-            // Preprocess text by removing bot references, newline chars, and empty messages
-            return text.replace(/(\r\n|\n|\r|TaskKeepr-local)/gm, "");
-          } catch (err) {
-            return "";
-          }
-        });
-
-        plainTextMessages = plainTextMessages.filter((txt) => txt);
+      if (context.activity.channelData && context.activity.channelData.team) {
+        console.log(context.activity.channelData);
+        // Message is from a team channel
+        let teamName = "";
+        let messages = [];
+        try {
+          messages = await this.getMessagesinThread(context, txt);
+          teamName = await this.getTeamName();
+        } catch (err) {
+          console.error(err);
+        }
 
         // POST messages to Cohere summarizer
         axios
@@ -83,44 +47,48 @@ class TeamsBot extends TeamsActivityHandler {
               userId: context.activity.from.id,
               userName: context.activity.from.name,
               teamId,
-              channelId,
-              messageId,
-              messages: plainTextMessages,
+              teamName,
+              messages,
             },
           })
           .then(console.log("API HIT"))
           .catch((err) => console.error(err));
 
-        // FIXME: add confirmation in teams channel that bot worked
-
-        // this.likeCountObj.likeCount = 0;
-        // const card = cardTools.AdaptiveCards.declare(rawLearnCard).render(
-        //   this.likeCountObj
-        // );
-        // await context.sendActivity({
-        //   attachments: [CardFactory.adaptiveCard(card)],
-        // });
-      } catch (err) {
-        console.error(err);
-        // FIXME: add error in teams channel
-      }
-
-      await next();
-    });
-
-    // Listen to MembersAdded event, view https://docs.microsoft.com/en-us/microsoftteams/platform/resources/bot-v3/bots-notifications for more events
-    this.onMembersAdded(async (context, next) => {
-      const membersAdded = context.activity.membersAdded;
-      for (let cnt = 0; cnt < membersAdded.length; cnt++) {
-        if (membersAdded[cnt].id) {
-          const card =
-            cardTools.AdaptiveCards.declareWithoutData(rawWelcomeCard).render();
-          await context.sendActivity({
-            attachments: [CardFactory.adaptiveCard(card)],
-          });
-          break;
+        const card = cardTools.AdaptiveCards.declare(rawSuccessCard).render();
+        await context.sendActivity({
+          attachments: [CardFactory.adaptiveCard(card)],
+        });
+      } else {
+        // Message is from a personal chat
+        switch (txt) {
+          case "today":
+            // GET summarized text for user
+            const description = "Here is all your work";
+            console.log(description);
+            const dailyCard = {
+              type: "AdaptiveCard",
+              body: [
+                {
+                  type: "TextBlock",
+                  text: `Here's how your day is looking, ${
+                    context.activity.from.name.split(" ")[0]
+                  }:`,
+                  size: "Large",
+                  weight: "Bolder",
+                },
+                {
+                  type: "TextBlock",
+                  text: description,
+                },
+              ],
+            };
+            const card = cardTools.AdaptiveCards.declare(dailyCard).render();
+            await context.sendActivity({
+              attachments: [CardFactory.adaptiveCard(card)],
+            });
         }
       }
+
       await next();
     });
   }
@@ -130,13 +98,94 @@ class TeamsBot extends TeamsActivityHandler {
     return conversationId.split("=")[1];
   }
 
+  async getTeamName() {
+    const authToken = process.env.GRAPH_ACCESS_TOKEN;
+    const headers = {
+      authorization: `Bearer ${authToken}`,
+    };
+
+    // GET main initial message
+    // https://graph.microsoft.com/beta/teams/{group-id-for-teams}/channels/{channel-id}/messages/{message-id}
+    let response = await axios.get(
+      `https://graph.microsoft.com/beta/teams/${teamId}`,
+      {
+        headers,
+      }
+    );
+    return response.data.displayName;
+  }
+
+  async getMessagesinThread(context, txt) {
+    const channelId = context.activity.channelData.channel.id;
+    const messageId = await this.getMessageId(context);
+    const authToken = process.env.GRAPH_ACCESS_TOKEN;
+    const headers = {
+      authorization: `Bearer ${authToken}`,
+    };
+
+    // GET main initial message
+    // https://graph.microsoft.com/beta/teams/{group-id-for-teams}/channels/{channel-id}/messages/{message-id}
+    let response = await axios.get(
+      `https://graph.microsoft.com/beta/teams/${teamId}/channels/${channelId}/messages/${messageId}`,
+      {
+        headers,
+      }
+    );
+    const firstMessage = response.data.body;
+    const firstUser = response.data.from.user.displayName;
+
+    // GET all subsequent messsages in thread
+    response = await axios.get(
+      `https://graph.microsoft.com/v1.0/teams/${teamId}/channels/${channelId}/messages/${messageId}/replies`,
+      // `https://graph.microsoft.com/beta/teams/0e90fc8a-94b3-4245-84f1-854c2046ae8c/channels/19:783ae848203546e3acc0d2c7998a942b@thread.tacv2/messages/1694878371226/replies`,
+      {
+        headers,
+      }
+    );
+
+    // Re-order and format messages from html -> text
+    let htmlMessages = response.data.value.map((r) => r.body);
+    htmlMessages.push(firstMessage);
+    htmlMessages = htmlMessages.reverse();
+    htmlMessages.push(txt);
+
+    let plainTextMessages = htmlMessages.map((msg) => {
+      try {
+        // Parse the HTML string into a DOM element and extract its plain text
+        const dom = new JSDOM(msg.content);
+        let text = dom.window.document.firstChild.textContent;
+        // Preprocess text by removing bot references, newline chars, and empty messages
+        return text.replace(/(\r\n|\n|\r|TaskKeepr-local)/gm, "");
+      } catch (err) {
+        return "";
+      }
+    });
+
+    // Get senders of each message
+    let senders = response.data.value.map((r) => r.from.user?.displayName);
+    senders.push(firstUser);
+    senders = senders.reverse();
+    senders.push(context.activity.from.name);
+
+    // Associate users with messages
+    return plainTextMessages
+      .map((message, index) => {
+        const name = senders[index];
+        if (message.trim() !== "" && name) {
+          return `${name}: ${message}`;
+        }
+        return null; // Ignore empty messages
+      })
+      .filter(Boolean);
+  }
+
   // Invoked when an action is taken on an Adaptive Card. The Adaptive Card sends an event to the Bot and this
   // method handles that event.
   async onAdaptiveCardInvoke(context, invokeValue) {
     // The verb "userlike" is sent from the Adaptive Card defined in adaptiveCards/learn.json
     if (invokeValue.action.verb === "userlike") {
       this.likeCountObj.likeCount++;
-      const card = cardTools.AdaptiveCards.declare(rawLearnCard).render(
+      const card = cardTools.AdaptiveCards.declare(rawSuccessCard).render(
         this.likeCountObj
       );
       await context.updateActivity({
