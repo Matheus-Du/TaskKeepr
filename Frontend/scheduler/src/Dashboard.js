@@ -2,7 +2,7 @@ import { CalendarTop } from "./components/CalendarTop";
 import { Header } from "./components/Header";
 import React, { useState, useEffect } from "react";
 import { Profile } from "./lib/Profile";
-import UAlberta from '../src/lib/shared/icon-ualberta.svg'
+import UAlberta from "../src/lib/shared/icon-ualberta.svg";
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -24,7 +24,7 @@ export default function Dashboard() {
   console.log(users);
   return (
     <>
-      <main className="flex w-full bg-backgroundWork">
+      <main className="flex w-full">
         <div className="flex flex-col gap-y-6">
           <Header />
           <div className="flex flex-col gap-y-4 mx-32 my-1">
@@ -41,7 +41,6 @@ export default function Dashboard() {
                   dateCreated={employeeData.dateCreated}
                 />
               ))}
-           
             </div>
           </div>
         </div>

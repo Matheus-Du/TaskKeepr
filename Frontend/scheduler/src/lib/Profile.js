@@ -1,8 +1,22 @@
 import React from "react";
-import UAlberta from "./shared/icon-ualberta.svg";
-// import { ProgressBar } from "../components/ProgressBar";
 import moment from "moment";
-import { useState } from "react";
+import Guy from "./shared/alex.jpg";
+
+const typeToColor = {
+  Food: "bg-green-500 border-green-500 border-4",
+  Meeting: "bg-blue-500 border-blue-500 border-4",
+  Task: "bg-yellow-500 border-yellow-500 border-4",
+  Away: "bg-red-500 border-red-500 border-4",
+  Default: "bg-gray-400 border-gray-400 border-4",
+};
+
+const typeToEmoji = {
+  Food: "🍔",
+  Meeting: "📅",
+  Task: "📋",
+  Away: "🏖️",
+  Default: "",
+};
 
 const getFillArray = (startDate, endDate) => {
   const start = moment(startDate).format("dddd");
@@ -32,157 +46,51 @@ export const Profile = ({
   endDate,
 }) => {
   const fillArray = getFillArray(startDate, endDate);
+  console.log(typeToColor[type]);
   return (
     <>
-    <div className="relative">
-    <div className='absolute flex flex-row'>
-                <div className='py-6 px-6 relative overflow-visible'>
-                    <div className='relative right-28 top-10 px-5 py-4 circle1 rounded-full border-2 h-20 w-20'>
-                        <img src={UAlberta} alt='UAlberta Logo'></img>
-                    </div>
-                </div> 
+      <div className="relative">
+        <div className="absolute flex flex-row">
+          <div className="py-12 px-6 relative overflow-visible ">
+            <div className="relative right-28 top-10 px-5 py-4 circle1 rounded-full border-2 h-20 w-20">
+              <img
+                className="object-cover rounded-xl h-10 w-28 "
+                src={Guy}
+                alt="UAlberta Logo"
+              ></img>
             </div>
-    <div className="flex grow">
-      <div className="w-1/8 flex items-center">
-        <p className="text-gray-100 px-6 py-12 ">{name}</p>
-      </div>
+          </div>
+        </div>
+        <div className="flex flex-grow w-full">
+          <div className="w-1/8 flex items-center">
+            <p className="text-gray-100 px-6 py-12 ">{name}</p>
+          </div>
 
-      <div
-        className={`flex-1/7 grow ${
-          fillArray[0] ? "relative bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[0] ? (
-          <>
-            <div className="flex relative grow bg-blue-500">
-              <p className="relative "></p>
-              <p className="text-blue-500">continue</p>
+          {fillArray.map((day, idx) => (
+            <div
+              className={`flex-1/7 max-w-[155px] p-4 grow ${
+                fillArray[idx]
+                  ? typeToColor[type]
+                  : "bg-gray-100 border-gray-800 border-2"
+              }`}
+            >
+              {fillArray[idx] && <p>{typeToEmoji[type]}</p>}
+              {fillArray[idx] && <p className="text-sm">{description}</p>}
+              {fillArray[idx] ? (
+                <>
+                  <div
+                    className={`flex relative grow ${typeToColor[type]}`}
+                  ></div>
+                </>
+              ) : (
+                <>
+                  <div className="flex grow bg-gray-100"></div>
+                </>
+              )}
             </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
+          ))}
+        </div>
       </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[1] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[1] ? (
-          <>
-            <div className="flex grow bg-blue-500 ">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[2] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[2] ? (
-          <>
-            <div className="flex grow bg-blue-500">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[3] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[3] ? (
-          <>
-            <div className="flex grow bg-blue-500">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[4] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[4] ? (
-          <>
-            <div className="flex grow bg-blue-500">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[5] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[5] ? (
-          <>
-            <div className="flex grow bg-blue-500">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div
-        className={`flex-1/7 border grow ${
-          fillArray[6] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
-        }`}
-      >
-        {fillArray[6] ? (
-          <>
-            <div className="flex grow bg-blue-500">
-              <p className="text-blue-500">continue</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex grow bg-gray-100">
-              <p className="text-gray-100">continue</p>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-    </div>
     </>
   );
 };
