@@ -216,7 +216,7 @@ def daily():
 
             # SQL query with additional conditions
             query = """
-            SELECT events.description
+            SELECT events.description, events.name
             FROM events
             INNER JOIN userEvent ON events.id = userEvent.event
             WHERE userEvent.teamMember = '{}'
@@ -234,6 +234,7 @@ def daily():
             data = cur.fetchall()
 
             # FIXME: @LEO summarize today using the list of `data`
+            print(get_to_do_today(data[0], data[1]))
 
             return 'test'
         
@@ -250,6 +251,18 @@ def get_summary(chat):
 		prompt = '\n'.join(chat) + '\nFor context: \'\'. '+ 
 		'In the format of this example: \'-Leo is fixing the login bug on signin page from 2 pm to 4 pm\'?' + 
 		'Give me the summary of this conversation?',
+		max_tokens = 100,
+		temperature= 0.1
+	)[0]
+
+def get_to_do_today(chat, name):
+	co = cohere.Client('VovM8HYiisv03U7UMnD9k6puo3z4TisNzS8im1No')
+	return co.generate(
+		model= 'command-nightly',
+		# stream= True,
+		prompt = '\n'.join(chat) + '\nFor context: \'I am ' + name + '\'. '+ 
+		'In the format of this example: \'- Fixing a login bug from 2 pm to 4 pm\'?' + 
+		'what am I doing today in bullet point?',
 		max_tokens = 100,
 		temperature= 0.1
 	)[0]
