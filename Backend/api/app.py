@@ -26,8 +26,6 @@ def create_message():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# TODO: Need to fix returns for GET requests; they should return obj ID's instead of names
-
 # Add a new user to the database or return all users
 @app.route("/users", methods=['GET', 'POST', 'DELETE'])
 def addUser():
