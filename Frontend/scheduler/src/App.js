@@ -1,63 +1,32 @@
-import { CalendarBelow } from "./components/CalendarBelow"
+import { CalendarBelow, EmployeeList } from "./components/EmployeeList"
 import { CalendarTop } from "./components/CalendarTop"
 import { Header } from "./components/Header"
-import React from "react";
-import { Link, Element, Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+import React, {useState, useEffect} from 'react';
 
 export default function App() {
-  React.useEffect(() => {
-    Events.scrollEvent.register('begin', function () {
-      console.log('scrolling has started');
-    });
+  
+  const [data, setData] = useState([{}]);
 
-    Events.scrollEvent.register('end', function () {
-      console.log('scrolling has ended');
-    });
-
-    scrollSpy.update();
-
-    return () => {
-      Events.scrollEvent.remove('begin');
-      Events.scrollEvent.remove('end');
-    };
-  }, []);
+  useEffect( ()=> {
+    fetch("/teams").then(
+      res => res.json()
+    ).then(
+      data => {
+        setData(data);
+        console.log(data);
+      }
+    )
+  }, [])
 
   return (
-    <main className="flex w-full h-screen bg-backgroundWork"> 
+    <main className="flex w-full bg-backgroundWork"> 
         <div className="flex flex-col gap-y-6">
-          <nav className="flex flex-row-reverse space-x-8 space-x-reverse w-screen">
-              <ul>
-                <li>
-                  <Link activeClass="active" to="section1" spy={true} smooth={true} duration={500}>
-                    Section 1
-                  </Link>
-                </li>
-                <li>
-                  <Link activeClass="active" to="section2" spy={true} smooth={true} duration={500}>
-                    Section 2
-                  </Link>
-                </li>
-                <li>
-                  <Link activeClass="active" to="section3" spy={true} smooth={true} duration={500}>
-                    Section 3
-                  </Link>
-                </li>
-              </ul>
-          </nav>
-        
-          <div className="flex flex-col mx-32 my-1">
-            <Element name="section1" className="element">
+
+          <Header/>
+          <div className="flex flex-col gap-y-4 mx-32 my-1">
               <CalendarTop/>
-            </Element>
-            <br/>
-            <div style={{height: "600px"}}></div>
-            <Element name="section2" className="element">
-              <CalendarBelow />
-            </Element>
-
-            <div style={{height: "600px"}}></div>
-
-          </div>
+              <EmployeeList/>
+        </div>
         </div>
     </main>
   )

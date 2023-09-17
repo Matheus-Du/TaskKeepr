@@ -19,12 +19,23 @@ class TeamsBot extends TeamsActivityHandler {
 
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
+      let txt = context.activity.text;
+      const removedMentionText = TurnContext.removeRecipientMention(
+        context.activity
+      );
+      if (removedMentionText) {
+        // Remove the line break
+        txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
+      }
 
       if (context.activity.channelData && context.activity.channelData.team) {
+        console.log(context.activity.channelData);
         // Message is from a team channel
+        let teamName = "";
         let messages = [];
         try {
-          messages = await this.getMessagesinThread(context);
+          messages = await this.getMessagesinThread(context, txt);
+          teamName = await this.getTeamName();
         } catch (err) {
           console.error(err);
         }
@@ -36,6 +47,7 @@ class TeamsBot extends TeamsActivityHandler {
               userId: context.activity.from.id,
               userName: context.activity.from.name,
               teamId,
+              teamName,
               messages,
             },
           })
@@ -48,11 +60,34 @@ class TeamsBot extends TeamsActivityHandler {
         });
       } else {
         // Message is from a personal chat
-        const text = context.activity.text.toLowerCase();
-        switch (text) {
+        switch (txt) {
           case "today":
             // GET summarized text for user
-            const summary = "Today you are working on:";
+            const response = await axios.get(
+              `http://localhost:5000/daily/${context.activity.from.id}?name=${context.activity.from.name}`
+            );
+
+            const dailyCard = {
+              type: "AdaptiveCard",
+              body: [
+                {
+                  type: "TextBlock",
+                  text: `Here's how your day is looking, ${
+                    context.activity.from.name.split(" ")[0]
+                  }:`,
+                  size: "Large",
+                  weight: "Bolder",
+                },
+                {
+                  type: "TextBlock",
+                  text: response.data,
+                },
+              ],
+            };
+            const card = cardTools.AdaptiveCards.declare(dailyCard).render();
+            await context.sendActivity({
+              attachments: [CardFactory.adaptiveCard(card)],
+            });
         }
       }
 
@@ -65,16 +100,24 @@ class TeamsBot extends TeamsActivityHandler {
     return conversationId.split("=")[1];
   }
 
-  async getMessagesinThread(context) {
-    let txt = context.activity.text;
-    const removedMentionText = TurnContext.removeRecipientMention(
-      context.activity
-    );
-    if (removedMentionText) {
-      // Remove the line break
-      txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
-    }
+  async getTeamName() {
+    const authToken = process.env.GRAPH_ACCESS_TOKEN;
+    const headers = {
+      authorization: `Bearer ${authToken}`,
+    };
 
+    // GET main initial message
+    // https://graph.microsoft.com/beta/teams/{group-id-for-teams}/channels/{channel-id}/messages/{message-id}
+    let response = await axios.get(
+      `https://graph.microsoft.com/beta/teams/${teamId}`,
+      {
+        headers,
+      }
+    );
+    return response.data.displayName;
+  }
+
+  async getMessagesinThread(context, txt) {
     const channelId = context.activity.channelData.channel.id;
     const messageId = await this.getMessageId(context);
     const authToken = process.env.GRAPH_ACCESS_TOKEN;
