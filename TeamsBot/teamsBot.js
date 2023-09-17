@@ -63,8 +63,10 @@ class TeamsBot extends TeamsActivityHandler {
         switch (txt) {
           case "today":
             // GET summarized text for user
-            const description = "Here is all your work";
-            console.log(description);
+            const response = await axios.get(
+              `http://localhost:5000/daily/${context.activity.from.id}?name=${context.activity.from.name}`
+            );
+
             const dailyCard = {
               type: "AdaptiveCard",
               body: [
@@ -78,7 +80,7 @@ class TeamsBot extends TeamsActivityHandler {
                 },
                 {
                   type: "TextBlock",
-                  text: description,
+                  text: response.data,
                 },
               ],
             };
