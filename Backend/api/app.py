@@ -11,7 +11,7 @@ app = Flask(__name__)
 # TODO: Need to fix returns for GET requests; they should return obj ID's instead of names
 
 # Add a new user to the database or return all users
-@app.route("/users", methods=['GET', 'POST'])
+@app.route("/users", methods=['GET', 'POST', 'DELETE'])
 def addUser():
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
@@ -32,9 +32,18 @@ def addUser():
                 for row in data:
                     json.append({'id': row[0], 'username': row[1]})
                 return json
+            elif request.method == 'DELETE':
+                data = request.get_json()
+                try:
+                    cur.execute("DELETE FROM users WHERE id = '{}'".format(data['id']))
+                    conn.commit()
+                except Exception:
+                    return "Error: User with that ID does not exist", 500
+                else:
+                    return "Success"
         
 # Add a new team to the database or return all teams
-@app.route("/teams", methods=['GET', 'POST'])
+@app.route("/teams", methods=['GET', 'POST', 'DELETE'])
 def addTeam():
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
@@ -55,9 +64,18 @@ def addTeam():
                 for row in data:
                     json.append({'id': row[0], 'name': row[1]})
                 return json
+            elif request.method == 'DELETE':
+                data = request.get_json()
+                try:
+                    cur.execute("DELETE FROM teams WHERE id = '{}'".format(data['id']))
+                    conn.commit()
+                except Exception:
+                    return "Error: Team with that ID does not exist", 500
+                else:
+                    return "Success"
                     
 # Add a new event to the database or return all events
-@app.route("/events", methods=['GET', 'POST'])
+@app.route("/events", methods=['GET', 'POST', 'DELETE'])
 def addEvent():
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
@@ -78,7 +96,16 @@ def addEvent():
                 for row in data:
                     json.append({'id': row[0], 'name': row[1], 'description': row[2], 'type': row[3], 'startDate': row[4], 'endDate': row[5], 'dateCreated': row[6]})
                 return json
-            
+            elif request.method == 'DELETE':
+                data = request.get_json()
+                try:
+                    cur.execute("DELETE FROM events WHERE id = '{}'".format(data['id']))
+                    conn.commit()
+                except Exception:
+                    return "Error: Event with that ID does not exist", 500
+                else:
+                    return "Success"
+
 # Given a team ID, return all users on that team or POST a user to add to that team
 @app.route("/teams/<id>/users", methods=['GET', 'POST'])
 def teamUsers(id):
