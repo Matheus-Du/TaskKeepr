@@ -1,0 +1,11 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "Summary uploaded to TaskKeepr ✅"
+    }
+]
+}
