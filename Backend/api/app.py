@@ -207,6 +207,37 @@ def teamEvents(id):
                 else:
                     return "Success"
 
+@app.route("/daily/<id>")
+def daily():
+    with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
+        with conn.cursor() as cur:
+            # Get today's date
+            today = datetime.date.today()
+
+            # SQL query with additional conditions
+            query = """
+            SELECT events.description
+            FROM events
+            INNER JOIN userEvent ON events.id = userEvent.event
+            WHERE userEvent.teamMember = '{}'
+            AND (
+                DATE(events.dateCreated) = '{}'
+                OR (
+                    '{}' BETWEEN DATE(events.startDate) AND DATE(events.endDate)
+                    AND DATE(events.startDate) <= '{}'
+                )
+            )
+            """.format(id, today, today, today)
+
+            # Execute the modified query
+            cur.execute(query)
+            data = cur.fetchall()
+
+            # FIXME: @LEO summarize today using the list of `data`
+
+            return 'test'
+        
+
 @app.route("/")
 def hello_world():
     return "Hello World"
