@@ -8,6 +8,7 @@ import json
 from datetime import datetime, date
 import pytz
 import uuid
+import re
 
 load_dotenv()
 
@@ -28,11 +29,27 @@ def create_message():
         print("Summary: \n", summary)
         
         event_info = get_summary_events(messages)
-        event_type = get_class(messages)
-        print("Event Info: \n", event_info)
-        print("\n " + event_type)
+        event_type, confidence = get_class(messages)
+        if confidence < 0.9:
+            event_type="Default"
+        print("Event Info:", event_info)
+        print("Event Type:", event_type, " Confidence:", confidence)
+        
+        # Use regular expressions to extract information from each line
+        info_dict = {}
+        title_match = re.search(r"Title:\s(.+)", event_info)
+        start_time_match = re.search(r"Start Time:\s(.+)", event_info)
+        end_time_match = re.search(r"End Time:\s(.+)", event_info)
+       
+        # Check if the matches were found and store the information in the dictionary
+        if title_match:
+            info_dict["title"] = title_match.group(1)
+        if start_time_match:
+            info_dict["startTime"] = start_time_match.group(1)
+        if end_time_match:
+            info_dict["endTime"] = end_time_match.group(1)
+        print('Extracted:', info_dict)
 
-        # FIXME @MATHEUS: insert result from Cohere into DB
         # check if team or user already exists in DB, if not, add them
         with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
             with conn.cursor() as cur:
@@ -50,7 +67,7 @@ def create_message():
 
                 # add event to DB
                 eventID = uuid.uuid4()
-                cur.execute("INSERT INTO events (id, name, description, type, startDate, endDate, dateCreated) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{4}', '{4}')".format(eventID, "PlaceholderTitle", summary, "PlaceholderType", datetime.now(pytz.timezone('US/Eastern'))))
+                cur.execute("INSERT INTO events (id, name, description, type, startDate, endDate, dateCreated) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')".format(eventID, info_dict["title"], summary, event_type, info_dict["startTime"], info_dict["endTime"], datetime.now(pytz.timezone('US/Eastern'))))
                 conn.commit()
                 # associate event with user and team using the userId and teamId to call the endpoints
                 cur.execute("INSERT INTO userEvent (event, teamMember) VALUES ('{}', '{}')".format(eventID, body['userId']))
@@ -312,8 +329,8 @@ def get_summary_events(chat):
 		# stream= True,
 		prompt = '\n'.join(chat) + '\nFor context: \'This is a group conversation\'. '+ 
 		'In the format of this example event: \'Title: Meeting between Leo and Steve,' +
-											'\nStart Time: Thurs, 15 Sep 2023 12:00:00 GMT' +
-											'\nEnd Time: Thurs, 15 Sep 2023 13:00:00 GMT' + 
+											'\nStart Time: 2023-09-17 04:43:44.504180-04:00' +
+											'\nEnd Time: 2023-09-17 04:43:44.504180-04:00' + 
 											'\nDescription: Discussing the new feature of the website' +
 											' \'' + 
 		'Give me a list of events in this chat in the above format.' + 
@@ -329,7 +346,7 @@ def get_class(chat):
 	model='21f46f0b-5c69-4c06-b337-0540375b4945-ft',
 	inputs=['\n'.join(chat)])
 
-	return 'Type: {}'.format(response.classifications[0].prediction)
+	return response.classifications[0].prediction, response.classifications[0].confidence
 
 if __name__ == '__main__':
     app.run(debug=True)
