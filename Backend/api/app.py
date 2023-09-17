@@ -218,7 +218,7 @@ def get_summary(chat):
 		# stream= True,
 		prompt = '\n'.join(chat) + '\nFor context: \'\'. '+ 
 		'In the format of this example: \'-Leo is fixing the login bug on signin page from 2 pm to 4 pm\'?' + 
-		'what am I doing today in bullet point?',
+		'Give me the summary of this conversation?',
 		max_tokens = 100,
 		temperature= 0.1
 	)[0]
