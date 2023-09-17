@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 import cohere
 import json
-from datetime import datetime
+from datetime import datetime, date
 import pytz
 import uuid
 
@@ -244,15 +244,16 @@ def teamEvents(id):
                     return "Success"
 
 @app.route("/daily/<id>")
-def daily():
+def daily(id):
     with psycopg.connect(os.getenv('DATABASE_URL')) as conn:
         with conn.cursor() as cur:
+            username = request.args.get('name')
             # Get today's date
-            today = datetime.date.today()
+            today = date.today()
 
             # SQL query with additional conditions
             query = """
-            SELECT events.description, events.name
+            SELECT events.description
             FROM events
             INNER JOIN userEvent ON events.id = userEvent.event
             WHERE userEvent.teamMember = '{}'
@@ -268,11 +269,7 @@ def daily():
             # Execute the modified query
             cur.execute(query)
             data = cur.fetchall()
-
-            # FIXME: @LEO summarize today using the list of `data`
-            print(get_to_do_today(data[0], data[1]))
-
-            return 'test'
+            return get_to_do_today(data[0], username)
         
 
 @app.route("/")
