@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import UAlberta from "./shared/icon-ualberta.svg";
 import { ProgressBar } from "../components/ProgressBar";
 import moment from "moment";
+import { useState } from "react";
 
 const getFillArray = (startDate, endDate) => {
   const start = moment(startDate).format("dddd");
@@ -23,15 +24,16 @@ const getFillArray = (startDate, endDate) => {
 };
 
 export const Profile = ({
-  id,
+  eventId,
   type,
   name,
   description,
   startDate,
   endDate,
 }) => {
-  const [fillArray] = useState(() => getFillArray(startDate, endDate));
-  console.log(fillArray);
+  const [start, setStart] = useState(startDate);
+  const [end, setEnd] = useState(endDate);
+  const fillArray = getFillArray(start, end);
 
   //Idea: Hover over profile logo and show name
   return (
@@ -43,8 +45,148 @@ export const Profile = ({
           </div>
         </div>
       </div>
-      <ProgressBar fillArray={fillArray} title={type} description={description} />
+      <div className="flex grow">
+        <div className="w-1/8 flex items-center">
+          <p className="text-gray-100 px-6 py-12 ">{type}</p>
+          <p className="">{description}</p>
+        </div>
+        <div
+          className={`flex-1/7 grow ${
+            fillArray[0]
+              ? "relative bg-blue-500 border-blue-500"
+              : "bg-gray-100"
+          }`}
+        >
+          {fillArray[0] ? (
+            <>
+              <div className="flex relative grow bg-blue-500">
+                <p className="relative "></p>
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[1] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[1] ? (
+            <>
+              <div className="flex grow bg-blue-500 ">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[2] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[2] ? (
+            <>
+              <div className="flex grow bg-blue-500">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[3] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[3] ? (
+            <>
+              <div className="flex grow bg-blue-500">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[4] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[4] ? (
+            <>
+              <div className="flex grow bg-blue-500">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[5] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[5] ? (
+            <>
+              <div className="flex grow bg-blue-500">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div
+          className={`flex-1/7 border grow ${
+            fillArray[6] ? "bg-blue-500 border-blue-500" : "bg-gray-100"
+          }`}
+        >
+          {fillArray[6] ? (
+            <>
+              <div className="flex grow bg-blue-500">
+                <p className="text-blue-500">continue</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex grow bg-gray-100">
+                <p className="text-gray-100">continue</p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
-
