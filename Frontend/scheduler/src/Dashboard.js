@@ -2,6 +2,7 @@ import { CalendarTop } from "./components/CalendarTop";
 import { Header } from "./components/Header";
 import React, { useState, useEffect } from "react";
 import { Profile } from "./lib/Profile";
+import UAlberta from '../src/lib/shared/icon-ualberta.svg'
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -40,6 +41,7 @@ export default function Dashboard() {
                   dateCreated={employeeData.dateCreated}
                 />
               ))}
+           
             </div>
           </div>
         </div>
