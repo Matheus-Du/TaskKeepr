@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 import cohere
 import json
+from datetime import datetime
+import pytz
 
 load_dotenv()
 
@@ -99,7 +101,7 @@ def addEvent():
             if request.method == 'POST':
                 data = request.get_json()
                 try:
-                    cur.execute("INSERT INTO events (name, description, type, startDate, endDate, dateCreated) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(data['name'], data['description'], data['type'], data['startDate'], data['endDate'], data['dateCreated']))
+                    cur.execute("INSERT INTO events (name, description, type, startDate, endDate, dateCreated) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(data['name'], data['description'], data['type'], data['startDate'], data['endDate'], datetime.now(pytz.timezone('US/Eastern'))))
                     conn.commit()
                 except Exception:
                     return "Error: Event with that ID already exists", 500
