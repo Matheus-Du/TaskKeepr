@@ -1,5 +1,11 @@
 # TaskKeepr
 
+
+
+https://github.com/Matheus-Du/TaskKeepr/assets/90405643/a95bce3a-ea70-4ce2-9bdf-6fb87f467061
+
+
+
 ## Description
 In the world of remote-work, keeping track of your co-workers availability - and informing them of your own plans - is a constant headache for many. TaskKeepr seeks to streamline this process by monitoring MS Teams chats and providing summaries of chats and messages that your co-workers want you to see but don't have a good option for doing so. The goal of TaskKeepr is to take the meaning of the `@General` tag back to its roots, namely mission-critical updates instead of unscheduled appointments with the dentist.
 
